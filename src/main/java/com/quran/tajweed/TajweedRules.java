@@ -1,6 +1,8 @@
 package com.quran.tajweed;
 
 import com.quran.tajweed.exporter.Exporter;
+import com.quran.tajweed.exporter.ImageExporter;
+import com.quran.tajweed.exporter.SvgExporter;
 import com.quran.tajweed.exporter.TextExporter;
 import com.quran.tajweed.model.Result;
 import com.quran.tajweed.model.ResultUtil;
@@ -28,6 +30,12 @@ public class TajweedRules {
     Exporter exporter = new TextExporter();
     exporter.onOutputStarted();
 
+    Exporter image = new ImageExporter();
+    image.onOutputStarted();
+
+    Exporter svg = new SvgExporter();
+    svg.onOutputStarted();
+
     List<TajweedRule> rules = TajweedRule.MADANI_RULES;
     for (String ayahText : text) {
       List<Result> results = new ArrayList<>();
@@ -36,6 +44,8 @@ public class TajweedRules {
       }
       ResultUtil.INSTANCE.sort(results);
       exporter.export(ayahText, results);
+      image.export(ayahText,results);
+      svg.export(ayahText,results);
     }
     exporter.onOutputCompleted();
   }

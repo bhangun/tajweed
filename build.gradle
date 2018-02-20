@@ -24,6 +24,7 @@ test {
 }
 
 dependencies {
+   compile 'org.jfree:jfreesvg:3.3'
    testCompile 'junit:junit:4.12'
    testCompile 'com.google.truth:truth:0.27'
 }
