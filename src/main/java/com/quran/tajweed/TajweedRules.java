@@ -1,9 +1,6 @@
 package com.quran.tajweed;
 
-import com.quran.tajweed.exporter.Exporter;
-import com.quran.tajweed.exporter.ImageExporter;
-import com.quran.tajweed.exporter.SvgExporter;
-import com.quran.tajweed.exporter.TextExporter;
+import com.quran.tajweed.exporter.*;
 import com.quran.tajweed.model.Result;
 import com.quran.tajweed.model.ResultUtil;
 import com.quran.tajweed.model.TajweedRule;
@@ -33,6 +30,9 @@ public class TajweedRules {
     Exporter image = new ImageExporter();
     image.onOutputStarted();
 
+    Exporter html = new HtmlExporter();
+    html.onOutputStarted();
+
     Exporter svg = new SvgExporter();
     svg.onOutputStarted();
 
@@ -44,9 +44,11 @@ public class TajweedRules {
       }
       ResultUtil.INSTANCE.sort(results);
       exporter.export(ayahText, results);
-      image.export(ayahText,results);
-      svg.export(ayahText,results);
+      //image.export(ayahText,results);
+     // svg.export(ayahText,results);
+      html.export(ayahText,results);
     }
     exporter.onOutputCompleted();
+    html.onOutputCompleted();
   }
 }

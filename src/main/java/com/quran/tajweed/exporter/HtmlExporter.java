@@ -5,6 +5,8 @@ import com.quran.tajweed.model.ResultType;
 import com.quran.tajweed.model.ResultUtil;
 import com.quran.tajweed.model.TwoPartResult;
 
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.List;
 
 /**
@@ -16,9 +18,10 @@ import java.util.List;
  * for more details.
  */
 public class HtmlExporter implements Exporter {
-
+StringBuilder buffer;
   @Override
   public void onOutputStarted() {
+    buffer = new StringBuilder();
     String builder = "<html>" + "<head>" +
         "<meta charset=\"UTF-8\">" +
         "<style>" +
@@ -32,6 +35,11 @@ public class HtmlExporter implements Exporter {
   @Override
   public void onOutputCompleted() {
     write("</html>");
+    try (PrintStream out = new PrintStream(new FileOutputStream("tajweed.html"))) {
+      out.print(buffer);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
   }
 
   @Override
@@ -95,5 +103,7 @@ public class HtmlExporter implements Exporter {
 
   private void write(String string) {
     System.out.println(string);
+     buffer.append(string);
+    //return buffer;
   }
 }
